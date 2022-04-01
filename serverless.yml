@@ -1,0 +1,21 @@
+service: bandan-example
+
+provider:
+  name: aws
+  runtime: java11
+  profile: default
+  region: ap-southeast-1
+  timeout: 10
+  memorySize: 1024
+package:
+  artifact: target/blank-java-1.0-SNAPSHOT.jar
+
+functions:
+  simpleHttp:
+    handler: bandan.example.ExampleHandler
+    environment:
+      ENV_NAME: debug
+    events:
+      - http:
+          method: POST
+          path: /example
