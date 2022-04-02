@@ -13,7 +13,7 @@ functions:
   simpleHttp:
     handler: bandan.example.ExampleHandler
     environment:
-      ENV_NAME: ${{ secrets.ENV_NAME }}
+      ENV_NAME: ${ssm:/env-name~true}
     events:
       - http:
           method: POST
