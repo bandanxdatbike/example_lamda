@@ -33,16 +33,13 @@ jobs:
       packages: write
     steps:
       - uses: serverless/github-action@v3
-      - if: github.event.inputs.select_action == 'Get Versions'
-        name: Get Deploy Version
-        run:  serverless deploy list --stage ${github.event.inputs.select_env}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - if: github.event.inputs.select_action == 'Get Versions'
+        name: Get Deploy Version
+        run:  serverless deploy list --stage ${github.event.inputs.select_env}
 
       - if: github.event.inputs.select_action == 'Rollback'
         name: Rollback
         run: serverless rollback --stage ${github.event.inputs.select_env} --timestamp ${github.event.inputs.service_version}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
