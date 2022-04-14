@@ -25,9 +25,6 @@ on:
 jobs:
   trigger_action:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
     permissions:
       contents: read
       packages: write
@@ -36,6 +33,7 @@ jobs:
         uses: serverless/github-action@v3
         name: Get Deploy Version
         with:
+          path: ./backend
           args: -c "serverless deploy list --stage ${{ github.event.inputs.select_env }}"
           entrypoint: /bin/sh
         env:
@@ -46,6 +44,7 @@ jobs:
         uses: serverless/github-action@v3
         name: Rollback
         with:
+          path: ./backend
           args: -c "serverless rollback --stage ${{ github.event.inputs.select_env }} --timestamp ${{ github.event.inputs.service_version }}"
           entrypoint: /bin/sh
         env:
