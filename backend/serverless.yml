@@ -12,8 +12,6 @@ package:
 functions:
   simpleHttp:
     handler: bandan.example.ExampleHandler
-    environment:
-      ENV_NAME: ${ssm:env-name}
     events:
       - http:
           method: POST

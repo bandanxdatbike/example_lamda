@@ -1,0 +1,53 @@
+name: Manual Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      select_action:
+        description: 'Actions'
+        required: true
+        type: choice
+        options:
+          - Get Versions
+          - Rollback
+      select_env:
+        description: 'Env'
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+      service_version:
+        description: 'Version'
+        required: false
+        default: ''
+
+jobs:
+  trigger_action:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - if: github.event.inputs.select_action == 'Get Versions'
+        name: Get Deploy Version
+        uses: serverless/github-action@v3
+        with:
+          args: -c "cd ./backend && serverless deploy list --stage ${github.event.inputs.select_env}"
+          entrypoint: /bin/sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - if: github.event.inputs.select_action == 'Rollback'
+        name: Rollback
+        uses: serverless/github-action@v3
+        with:
+          args: -c "cd ./backend && serverless rollback --stage ${github.event.inputs.select_env} --timestamp ${github.event.inputs.service_version}"
+          entrypoint: /bin/sh
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
