@@ -4,8 +4,8 @@ on:
   # Triggers the workflow on push for the master branch
   push:
     branches: [ master ]
-#    paths:
-#      - 'backend/**'
+    paths:
+      - 'backend/**'
 
 jobs:
   build_backend:
@@ -25,7 +25,7 @@ jobs:
           distribution: 'temurin'
       - name: Build with Maven
         run: mvn package
-      - name: cache build
+      - name: cache backend build
         uses: actions/cache@v2
         with:
           path: |
@@ -42,7 +42,7 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: cache build
+      - name: Fetch Cache Backend Build
         uses: actions/cache@v2
         with:
           path: |
