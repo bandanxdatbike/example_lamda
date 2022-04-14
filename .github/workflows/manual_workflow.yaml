@@ -46,7 +46,7 @@ jobs:
         name: Rollback
         uses: serverless/github-action@v3
         with:
-          args: -c "cd ./backend && serverless rollback --stage ${{ github.event.inputs.select_env }} --timestamp ${{ github.event.inputs.service_version }}"
+          args: -c "cd ./backend && serverless deploy list --stage ${{ github.event.inputs.select_env }} && serverless rollback --stage ${{ github.event.inputs.select_env }} --timestamp ${{ github.event.inputs.service_version }}"
           entrypoint: /bin/sh
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

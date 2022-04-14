@@ -23,9 +23,27 @@ jobs:
         with:
           java-version: '18'
           distribution: 'temurin'
-
       - name: Build with Maven
         run: mvn package
+      - name: cache build
+        uses: actions/cache@v2
+        with:
+          path: "./backend/target"
+          key: ${{ runner.os }}-$GITHUB_RUN_ID
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: cache build
+        uses: actions/cache@v2
+        with:
+          path: "./backend/target"
+          key: ${{ runner.os }}-$GITHUB_RUN_ID
 
       - name: serverless deploy
         uses: serverless/github-action@v3
