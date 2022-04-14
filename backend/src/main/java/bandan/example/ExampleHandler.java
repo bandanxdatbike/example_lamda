@@ -18,7 +18,7 @@ public class ExampleHandler implements RequestHandler<Map<String, Object>, Map<S
 
         Map<String, Object> resp = new HashMap();
         resp.put("statusCode", 200);
-        resp.put("body", "{\"env_name\": \""+envName+"\", \"version\": \"1.0.1\"}");
+        resp.put("body", "{\"env_name\": \""+envName+"\", \"version\": \"1.0.2\"}");
 
         return resp;
     }
