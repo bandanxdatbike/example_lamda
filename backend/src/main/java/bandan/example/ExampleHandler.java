@@ -14,7 +14,7 @@ public class ExampleHandler implements RequestHandler<Map<String, Object>, Map<S
     @Override
     public Map<String, Object> handleRequest(Map<String, Object> input, Context context) {
         input.forEach((k, v) -> System.out.println(k + ": " + v));
-        String envName = "example_lambda"
+        String envName = "example_lambda";
 
         Map<String, Object> resp = new HashMap();
         resp.put("statusCode", 200);
