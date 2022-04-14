@@ -16,7 +16,7 @@ public class ExampleHandler implements RequestHandler<Map<String, Object>, Map<S
         input.forEach((k, v) -> System.out.println(k + ": " + v));
         String envName = "example_lambda";
 
-        Map<String, Object> resp = new HashMap();
+        Map<String, Object> resp = new HashMap()
         resp.put("statusCode", 200);
         resp.put("body", "{\"env_name\": \""+envName+"\", \"version\": \"1.0.1\"}");
 
